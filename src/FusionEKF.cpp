@@ -14,6 +14,10 @@ using std::vector;
  * Constructor.
  */
 FusionEKF::FusionEKF() {
+    ReInit();
+}
+
+void FusionEKF::ReInit() {
     is_initialized_ = false;
 
     previous_timestamp_ = 0;
@@ -96,6 +100,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
                     0,
                     0;
         }
+
+        // Store time
+        previous_timestamp_ = measurement_pack.timestamp_;
 
         // done initializing, no need to predict or update
         is_initialized_ = true;

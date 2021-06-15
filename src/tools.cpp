@@ -7,6 +7,8 @@ using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
 
+static double EPS = 0.00000001;
+
 Tools::Tools() = default;
 
 Tools::~Tools() = default;
@@ -90,9 +92,9 @@ VectorXd Tools::TransformCart2Polar(const VectorXd &x_state) {
 
     // Division 0 check, set rho bec we can not skip this step
     double rho = sqrt(px * px + py * py);
-    if (rho == 0){
+    if (fabs(rho) < EPS){
         Logging::logging("[TransformCart2Polar] Division by 0", Logging::WARNING);
-        rho = 0.000001;
+        rho = EPS;
     }
 
     VectorXd x_pol = VectorXd(3);
@@ -111,8 +113,7 @@ VectorXd Tools::TransformCart2Polar(const VectorXd &x_state) {
 double Tools::Mod(double x, double y)
 {
     static_assert(!std::numeric_limits<double>::is_exact , "Mod: floating-point type expected");
-
-    if (0. == y)
+    if (fabs(y) < EPS)
         return x;
 
     double m= x - y * floor(x/y);

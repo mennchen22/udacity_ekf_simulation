@@ -14,6 +14,8 @@ using std::vector;
 // for convenience
 using json = nlohmann::json;
 
+static bool reinit_fekj = false;
+
 // Checks if the SocketIO event has JSON data.
 // If there is data the JSON object in string format will be returned,
 // else the empty string "" will be returned.
@@ -47,6 +49,11 @@ int main() {
     h.onMessage([&fusionEKF, &estimations, &ground_truth]
                         (uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                          uWS::OpCode opCode) {
+        if(reinit_fekj == true){
+            fusionEKF.ReInit();
+            reinit_fekj = false;
+        }
+
         // "42" at the start of the message means there's a websocket message event.
         // The 4 signifies a websocket message
         // The 2 signifies a websocket event
@@ -158,6 +165,7 @@ int main() {
 
     h.onConnection([&h](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) {
         std::cout << "Connected!!!" << std::endl;
+        reinit_fekj = true;
     });
 
     h.onDisconnection([&h](uWS::WebSocket<uWS::SERVER> ws, int code,

@@ -22,6 +22,11 @@ public:
     virtual ~FusionEKF();
 
     /**
+     * Reinitialize the kalman filter
+     */
+    void ReInit();
+
+    /**
      * Run the whole flow of the Kalman Filter from here.
      */
     void ProcessMeasurement(const MeasurementPackage &measurement_pack);
