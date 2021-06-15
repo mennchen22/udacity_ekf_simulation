@@ -52,6 +52,8 @@ int main() {
         if(reinit_fekj == true){
             fusionEKF.ReInit();
             reinit_fekj = false;
+            estimations.clear();
+            ground_truth.clear();
         }
 
         // "42" at the start of the message means there's a websocket message event.
@@ -154,6 +156,9 @@ int main() {
                     ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
 
                 }  // end "telemetry" if
+                else{
+                    Logging::logging("Unknwon event " + event, Logging::DEBUG);
+                }
 
             } else {
                 string msg = "42[\"manual\",{}]";

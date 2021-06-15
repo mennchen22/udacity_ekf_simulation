@@ -165,6 +165,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     }
 
     // logging the output
-    cout << "x_ = " << ekf_.x_ << endl;
-    cout << "P_ = " << ekf_.P_ << endl;
+    //cout << "x_ = " << ekf_.x_ << endl;
+    //cout << "P_ = " << ekf_.P_ << endl;
 }

@@ -41,7 +41,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
     // Reset angle within 2pi range
     double angle = y(1);
-    y(1) = copysign(1.0, angle) * Tools::Mod(abs(angle), M_PI * 2);
+    //y(1) = copysign(1.0, angle) * Tools::Mod(abs(angle), M_PI * 2);
+    y(1) = atan2(sin(angle), cos(angle));
 
     UpdateCommon(y);
 }
